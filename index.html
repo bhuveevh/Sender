@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VacancyHai.online - File Sender</title>
+    <title>VacancyHai.online - Sender</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
@@ -252,12 +252,14 @@
             }
             /* Mobile: Upload button width same as Trust Title input */
             .file-upload-wrapper {
-                width: 100%; /* Take full width to match other inputs */
+                /* Set width to fill the column like other inputs */
+                width: 100%; 
                 height: 50px;
-                justify-content: flex-start; /* Align to the left */
+                justify-content: center; /* Center the icon horizontally within the full width */
             }
             .file-upload-button {
-                width: 100%; /* Make the button itself take full width of its wrapper */
+                /* This button now takes full width of its wrapper, which is 100% of the column */
+                width: 100%; 
             }
 
             .vh-id-check-button {
@@ -415,7 +417,7 @@
             } finally {
                 // Re-enable check button if input is still valid
                 checkVhIdButton.disabled = !(vhIdInput.value.length === 5 && /^[0-9]{5}$/.test(vhIdInput.value));
-                validateForm();
+                validateForm(); // Re-validate to ensure send button state is correct
             }
         }
 
@@ -432,25 +434,28 @@
             // 3. File is selected and valid (size/extension)
             sendButton.disabled = !(isTrustTitleValid && isVhIdAvailable && isFileSelected && isFileValidSize && isFileValidExtension);
 
-            // Update general status message
-            if (!isFileSelected) {
-                generalStatusMessage.textContent = 'Please select a file.';
-                generalStatusMessage.className = 'status-message info';
-            } else if (!isFileValidSize) {
-                generalStatusMessage.textContent = `File size is ${Math.round(selectedFile.size / (1024 * 1024))} MB, which exceeds the maximum of 5 MB.`;
-                generalStatusMessage.className = 'status-message error';
-            } else if (!isFileValidExtension) {
-                generalStatusMessage.textContent = `Unsupported file format: .${selectedFile.name.split('.').pop().toLowerCase()}.`;
-                generalStatusMessage.className = 'status-message error';
-            } else if (!isTrustTitleValid) {
-                 generalStatusMessage.textContent = 'Trust Title must be 3-20 characters.';
-                 generalStatusMessage.className = 'status-message warning';
-            } else if (!isVhIdAvailable) {
-                generalStatusMessage.textContent = 'Please check vH ID and ensure it is available.';
-                generalStatusMessage.className = 'status-message warning';
-            } else {
-                generalStatusMessage.textContent = 'File is ready to send.';
-                generalStatusMessage.className = 'status-message success';
+            // Update general status message ONLY if not in a sending state or success state
+            // or if there's a validation error.
+            if (!generalStatusMessage.classList.contains('success') && !generalStatusMessage.innerHTML.includes('spinner')) {
+                if (!isFileSelected) {
+                    generalStatusMessage.textContent = 'Please select a file.';
+                    generalStatusMessage.className = 'status-message info';
+                } else if (!isFileValidSize) {
+                    generalStatusMessage.textContent = `File size is ${Math.round(selectedFile.size / (1024 * 1024))} MB, which exceeds the maximum of 5 MB.`;
+                    generalStatusMessage.className = 'status-message error';
+                } else if (!isFileValidExtension) {
+                    generalStatusMessage.textContent = `Unsupported file format: .${selectedFile.name.split('.').pop().toLowerCase()}.`;
+                    generalStatusMessage.className = 'status-message error';
+                } else if (!isTrustTitleValid) {
+                     generalStatusMessage.textContent = 'Trust Title must be 3-20 characters.';
+                     generalStatusMessage.className = 'status-message warning';
+                } else if (!isVhIdAvailable) {
+                    generalStatusMessage.textContent = 'Please check vH ID and ensure it is available.';
+                    generalStatusMessage.className = 'status-message warning';
+                } else {
+                    generalStatusMessage.textContent = 'File is ready to send.';
+                    generalStatusMessage.className = 'status-message success';
+                }
             }
         }
 
@@ -490,7 +495,7 @@
                 if (response.ok && data.ok) {
                     generalStatusMessage.textContent = 'File successfully sent!';
                     generalStatusMessage.className = 'status-message success';
-                    // Reset form and status after successful send
+                    // Reset form fields after successful send
                     uploadForm.reset();
                     selectedFile = null;
                     fileInfo.textContent = '';
@@ -498,6 +503,7 @@
                     vhIdStatus.className = 'vh-id-status';
                     isVhIdAvailable = false;
                     checkVhIdButton.disabled = true;
+                    // Do NOT call validateForm() here, let the success message persist
                 } else {
                     let errorMessage = data.description || 'Failed to send file.';
                     if (response.status === 400 && errorMessage.includes('file too big')) {
@@ -513,7 +519,8 @@
                 console.error('Fetch error:', error);
             } finally {
                 sendButton.disabled = false;
-                validateForm(); // Re-validate to set correct button state and message
+                // We don't call validateForm here to preserve the success/error message
+                // The form fields being reset will implicitly make the form invalid for next send.
             }
         });
 
