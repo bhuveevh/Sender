@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VacancyHai.online - फाइल सेंडर</title>
+    <title>VacancyHai.online - File Sender</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
@@ -15,7 +15,7 @@
             min-height: 100vh;
             background-color: #f0f0f0;
             margin: 0;
-            overflow-x: hidden; /* क्षैतिज स्क्रॉल से बचने के लिए */
+            overflow-x: hidden;
         }
 
         .container {
@@ -27,7 +27,7 @@
             max-width: 550px;
             width: 90%;
             border: 2px solid #ccc;
-            box-sizing: border-box; /* पैडिंग और बॉर्डर को चौड़ाई में शामिल करें */
+            box-sizing: border-box;
         }
 
         .header {
@@ -43,14 +43,14 @@
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-            flex-wrap: wrap; /* छोटे स्क्रीन के लिए */
-            gap: 10px; /* एलिमेंट्स के बीच गैप */
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .input-group {
             display: flex;
             align-items: center;
-            flex-grow: 1; /* उपलब्ध स्थान भरने के लिए */
+            flex-grow: 1;
             position: relative;
         }
 
@@ -62,7 +62,7 @@
             font-size: 1em;
             outline: none;
             transition: border-color 0.3s ease;
-            box-sizing: border-box; /* पैडिंग और बॉर्डर को चौड़ाई में शामिल करें */
+            box-sizing: border-box;
         }
 
         .input-group input[type="text"]:focus {
@@ -73,25 +73,25 @@
             color: red;
             font-size: 1.5em;
             position: absolute;
-            right: 10px; /* इनपुट के भीतर पोजीशन */
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
         }
-        /* Trust Title के लिए स्टार को थोड़ा अलग पोजीशन करें */
         .trust-title-group .required-star {
-            right: 15px; /* या अपने अनुसार एडजस्ट करें */
+            right: 15px;
         }
 
         /* File Upload Button */
         .file-upload-wrapper {
             position: relative;
-            display: flex; /* Flexbox का उपयोग करें */
-            align-items: center; /* वर्टिकल सेंटर */
-            justify-content: center; /* हॉरिजॉन्टल सेंटर */
-            width: 50px; /* निश्चित चौड़ाई */
-            height: 50px; /* निश्चित ऊंचाई */
-            flex-shrink: 0; /* सिकुड़ने से रोकें */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            cursor: pointer; /* पूरे रैपर को क्लिक करने योग्य बनाएं */
         }
         .file-upload-button {
             background-color: #0000FF;
@@ -102,8 +102,8 @@
             cursor: pointer;
             font-size: 1.2em;
             transition: background-color 0.3s ease;
-            width: 100%; /* रैपर के भीतर पूरी चौड़ाई */
-            height: 100%; /* रैपर के भीतर पूरी ऊंचाई */
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -125,7 +125,7 @@
             cursor: pointer;
         }
 
-        /* vH ID चेक बटन */
+        /* vH ID Check Button */
         .vh-id-check-button {
             background-color: #0000FF;
             color: white;
@@ -135,7 +135,7 @@
             cursor: pointer;
             font-size: 1em;
             transition: background-color 0.3s ease;
-            flex-shrink: 0; /* सिकुड़ने से रोकें */
+            flex-shrink: 0;
         }
         .vh-id-check-button:hover {
             background-color: #0056b3;
@@ -166,7 +166,7 @@
         }
         .vh-id-status.available { color: green; }
         .vh-id-status.unavailable { color: red; }
-        .vh-id-status.info-check { color: #0000FF; } /* चेक होने पर नीला */
+        .vh-id-status.info-check { color: #0000FF; }
 
         .send-button {
             background-color: #28a745;
@@ -182,7 +182,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 20px; /* थोड़ा स्पेस दें */
+            margin-top: 20px;
         }
         .send-button:hover:not(:disabled) {
             background-color: #218838;
@@ -204,18 +204,12 @@
             color: #777;
         }
 
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-top: -15px;
-            margin-bottom: 10px;
-        }
         .file-info {
             font-size: 0.85em;
             color: #555;
             margin-bottom: 15px;
             min-height: 20px;
-            text-align: left; /* फ़ाइल जानकारी को बाईं ओर अलाइन करें */
+            text-align: left;
         }
         .file-info span {
             font-weight: bold;
@@ -225,31 +219,32 @@
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
-                width: 95%; /* छोटे स्क्रीन पर थोड़ी अधिक चौड़ाई */
+                width: 95%;
             }
             .header {
                 font-size: 1.5em;
             }
             .input-row {
-                flex-direction: column; /* इनपुट को स्टैक करें */
-                gap: 15px; /* स्टैक्ड होने पर अधिक गैप */
+                flex-direction: column;
+                gap: 15px;
             }
             .input-group {
-                width: 100%; /* पूरी चौड़ाई लें */
+                width: 100%;
             }
+            /* File upload button adjustments for mobile */
             .file-upload-wrapper {
-                width: 100%; /* छोटे स्क्रीन पर भी पूरी चौड़ाई */
+                width: 100%; /* Take full width on small screens */
                 height: 50px;
-                justify-content: flex-start; /* बाईं ओर अलाइन करें */
+                justify-content: flex-start; /* Align to the left */
             }
             .file-upload-button {
-                width: 100px; /* अपलोड बटन के लिए थोड़ी चौड़ाई */
+                width: 100px; /* Make the button itself a bit wider */
             }
             .vh-id-check-button {
                 width: 100%;
             }
             .input-group .required-star {
-                right: 15px; /* छोटे स्क्रीन पर भी सही पोजीशन पर हो */
+                right: 15px;
             }
             .trust-title-group .required-star {
                 right: 15px;
@@ -260,14 +255,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="vacancyhai.online_logo_@_.webp" alt="VacancyHai.online Logo" class="logo"> <br>
             VACANCYHAI.ONLINE - SENDER
         </div>
 
         <form id="uploadForm">
             <div class="input-row">
                 <div class="file-upload-wrapper">
-                    <button type="button" class="file-upload-button" title="फाइल अपलोड करें"></button>
+                    <button type="button" class="file-upload-button" title="Upload File"></button>
                     <input type="file" id="fileInput" name="document">
                 </div>
                 <div class="input-group trust-title-group">
@@ -276,8 +270,9 @@
                 </div>
             </div>
 
-            <div class="input-row" style="align-items: flex-end;"> <div class="input-group">
-                    <input type="text" id="vhIdInput" class="vh-id-input" placeholder="vH id----" maxlength="5" pattern="[0-9]{5}" required>
+            <div class="input-row" style="align-items: flex-end;">
+                <div class="input-group">
+                    <input type="text" id="vhIdInput" class="vh-id-input" placeholder="vH ID----" maxlength="5" pattern="[0-9]{5}" required>
                     <span class="required-star">*</span>
                 </div>
                 <button type="button" id="checkVhIdButton" class="vh-id-check-button" disabled>Check ID</button>
@@ -297,66 +292,66 @@
     </div>
 
     <script>
-        // !! चेतावनी: यह कोड आपका Telegram Bot Token सार्वजनिक रूप से उजागर करता है !!
-        // !! यह एक गंभीर सुरक्षा जोखिम है और इसे उत्पादन में उपयोग नहीं किया जाना चाहिए !!
-        // !! सुरक्षा कारणों से एक सुरक्षित बैकएंड (सर्वर/सर्वरलेस फंक्शन) का उपयोग करने की अत्यधिक सलाह दी जाती है !!
+        // !! WARNING: This code exposes your Telegram Bot Token publicly !!
+        // !! This is a serious security risk and should NOT be used in production !!
+        // !! For security, it is highly recommended to use a secure backend (server/serverless function) !!
 
-        const BOT_TOKEN = '8024108932:AAHMIqs0MFH9mN8NF5by-0uepbRHDyjqfdU'; // आपका दिया गया बॉट टोकन
-        const CHANNEL_ID = '-1002606747957'; // आपका दिया गया चैनल ID
+        const BOT_TOKEN = '8024108932:AAHMIqs0MFH9mN8NF5by-0uepbRHDyjqfdU'; // Your provided Bot Token
+        const CHANNEL_ID = '-1002606747957'; // Your provided Channel ID
 
         // Google Sheet URL (CSV Export)
         const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1u53nFs5LHJAroQ3KQYK_eato29qT89f-ypfdjuApycI/export?format=csv&gid=0';
 
-        // UI एलिमेंट्स
+        // UI Elements
         const uploadForm = document.getElementById('uploadForm');
         const fileInput = document.getElementById('fileInput');
         const trustTitleInput = document.getElementById('trustTitleInput');
         const vhIdInput = document.getElementById('vhIdInput');
-        const checkVhIdButton = document.getElementById('checkVhIdButton'); // नया बटन
+        const checkVhIdButton = document.getElementById('checkVhIdButton');
         const vhIdStatus = document.getElementById('vhIdStatus');
         const fileInfo = document.getElementById('fileInfo');
         const generalStatusMessage = document.getElementById('generalStatusMessage');
         const sendButton = document.getElementById('sendButton');
 
-        // फ़ाइल साइज़ और एक्सटेंशन प्रतिबंध
+        // File size and extension restrictions
         const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
         const SUPPORTED_EXTENSIONS = ['jpg', 'jpeg', 'webp', 'png', 'pdf', 'docx'];
 
         let isVhIdAvailable = false;
         let selectedFile = null;
 
-        // --- फ़ाइल इनपुट परिवर्तन हैंडलर ---
+        // --- File input change handler ---
         fileInput.addEventListener('change', () => {
             selectedFile = fileInput.files[0];
             if (selectedFile) {
-                fileInfo.textContent = `फाइल: ${selectedFile.name} (${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB)`;
+                fileInfo.textContent = `File: ${selectedFile.name} (${(selectedFile.size / (1024 * 1024)).toFixed(2)} MB)`;
             } else {
                 fileInfo.textContent = '';
             }
             validateForm();
         });
 
-        // --- Trust Title इनपुट वैलिडेशन ---
+        // --- Trust Title input validation ---
         trustTitleInput.addEventListener('input', validateForm);
 
-        // --- vH ID इनपुट और चेक बटन लॉजिक ---
+        // --- vH ID input and Check ID button logic ---
         vhIdInput.addEventListener('input', () => {
-            // vH ID इनपुट पर 'Check ID' बटन को इनेबल/डिसेबल करें
+            // Enable/disable 'Check ID' button based on vH ID input
             checkVhIdButton.disabled = !(vhIdInput.value.length === 5 && /^[0-9]{5}$/.test(vhIdInput.value));
-            vhIdStatus.textContent = ''; // जब टाइप करें तो स्टेटस रीसेट करें
+            vhIdStatus.textContent = ''; // Reset status when typing
             vhIdStatus.className = 'vh-id-status';
-            isVhIdAvailable = false; // टाइप करते ही अनुपलब्ध मानें
-            validateForm(); // बटन डिसेबल होने पर फॉर्म वैलिडेशन को अपडेट करें
+            isVhIdAvailable = false; // Assume unavailable while typing
+            validateForm();
         });
 
         checkVhIdButton.addEventListener('click', () => {
             const vhId = vhIdInput.value;
             if (vhId.length === 5 && /^[0-9]{5}$/.test(vhId)) {
-                vhIdStatus.textContent = 'जांच हो रही है...';
+                vhIdStatus.textContent = 'Checking...';
                 vhIdStatus.className = 'vh-id-status info-check';
                 checkVhIdInSheet(vhId);
             } else {
-                vhIdStatus.textContent = 'कृपया 5 अंकों की न्यूमेरिक ID डालें।';
+                vhIdStatus.textContent = 'Please enter a 5-digit numeric ID.';
                 vhIdStatus.className = 'vh-id-status warning';
                 isVhIdAvailable = false;
                 validateForm();
@@ -364,9 +359,9 @@
         });
 
         async function checkVhIdInSheet(idToCheck) {
-            checkVhIdButton.disabled = true; // चेक करते समय बटन डिसेबल करें
+            checkVhIdButton.disabled = true; // Disable button while checking
             try {
-                // CORS समस्या यहाँ आ सकती है। यदि यह विफल होता है, तो आपको एक बैकएंड प्रॉक्सी की आवश्यकता होगी।
+                // CORS issue might occur here. If it fails, you'll need a backend proxy.
                 const response = await fetch(GOOGLE_SHEET_CSV_URL);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -393,17 +388,18 @@
                     isVhIdAvailable = false;
                 }
             } catch (error) {
-                console.error('Google Sheet से vH ID की जांच करते समय त्रुटि:', error);
-                vhIdStatus.textContent = 'ID जांचने में त्रुटि। (CORS?)';
+                console.error('Error checking vH ID from Google Sheet:', error);
+                vhIdStatus.textContent = 'Error checking ID. (CORS?)';
                 vhIdStatus.className = 'vh-id-status error';
                 isVhIdAvailable = false;
             } finally {
-                checkVhIdButton.disabled = !(vhIdInput.value.length === 5 && /^[0-9]{5}$/.test(vhIdInput.value)); // जांच खत्म होने पर फिर से इनेबल करें
+                // Re-enable check button if input is still valid
+                checkVhIdButton.disabled = !(vhIdInput.value.length === 5 && /^[0-9]{5}$/.test(vhIdInput.value));
                 validateForm();
             }
         }
 
-        // --- फॉर्म वैलिडेशन और बटन सक्रियण ---
+        // --- Form validation and button enablement ---
         function validateForm() {
             const isTrustTitleValid = trustTitleInput.value.length >= 3 && trustTitleInput.value.length <= 20;
             const isFileSelected = selectedFile !== null;
@@ -416,29 +412,29 @@
             // 3. File is selected and valid (size/extension)
             sendButton.disabled = !(isTrustTitleValid && isVhIdAvailable && isFileSelected && isFileValidSize && isFileValidExtension);
 
-            // सामान्य स्थिति संदेश अपडेट करें
+            // Update general status message
             if (!isFileSelected) {
-                generalStatusMessage.textContent = 'कृपया एक फाइल चुनें।';
+                generalStatusMessage.textContent = 'Please select a file.';
                 generalStatusMessage.className = 'status-message info';
             } else if (!isFileValidSize) {
-                generalStatusMessage.textContent = `फाइल का आकार ${Math.round(selectedFile.size / (1024 * 1024))} MB है, जो अधिकतम 5 MB से अधिक है।`;
+                generalStatusMessage.textContent = `File size is ${Math.round(selectedFile.size / (1024 * 1024))} MB, which exceeds the maximum of 5 MB.`;
                 generalStatusMessage.className = 'status-message error';
             } else if (!isFileValidExtension) {
-                generalStatusMessage.textContent = `असमर्थित फाइल फॉर्मेट: .${selectedFile.name.split('.').pop().toLowerCase()}।`;
+                generalStatusMessage.textContent = `Unsupported file format: .${selectedFile.name.split('.').pop().toLowerCase()}.`;
                 generalStatusMessage.className = 'status-message error';
             } else if (!isTrustTitleValid) {
-                 generalStatusMessage.textContent = 'Trust Title 3-20 अक्षरों का होना चाहिए।';
+                 generalStatusMessage.textContent = 'Trust Title must be 3-20 characters.';
                  generalStatusMessage.className = 'status-message warning';
             } else if (!isVhIdAvailable) {
-                generalStatusMessage.textContent = 'कृपया vH ID की जांच करें और सुनिश्चित करें कि यह उपलब्ध है।';
+                generalStatusMessage.textContent = 'Please check vH ID and ensure it is available.';
                 generalStatusMessage.className = 'status-message warning';
             } else {
-                generalStatusMessage.textContent = 'फाइल भेजने के लिए तैयार है।';
+                generalStatusMessage.textContent = 'File is ready to send.';
                 generalStatusMessage.className = 'status-message success';
             }
         }
 
-        // --- फॉर्म सबमिट हैंडलर (टेलीग्राम पर भेजें) ---
+        // --- Form submit handler (Send to Telegram) ---
         uploadForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -447,9 +443,9 @@
                 return;
             }
 
-            generalStatusMessage.textContent = 'फाइल भेजी जा रही है... कृपया प्रतीक्षा करें।';
+            generalStatusMessage.textContent = 'Sending file... Please wait.';
             generalStatusMessage.className = 'status-message info';
-            sendButton.disabled = true; // भेजने के दौरान बटन डिसेबल करें
+            sendButton.disabled = true;
 
             const file = selectedFile;
             const trustTitle = trustTitleInput.value;
@@ -458,7 +454,6 @@
             const formData = new FormData();
             formData.append('chat_id', CHANNEL_ID);
             formData.append('document', file);
-            // कैप्शन में Trust Title और vH ID जोड़ें
             formData.append('caption', `${trustTitle} (vH id-${vhId})`); 
 
             try {
@@ -472,27 +467,27 @@
                 const data = await response.json();
 
                 if (response.ok && data.ok) {
-                    generalStatusMessage.textContent = 'फाइल सफलतापूर्वक टेलीग्राम चैनल पर भेजी गई!';
+                    generalStatusMessage.textContent = 'File successfully sent to Telegram channel!';
                     generalStatusMessage.className = 'status-message success';
-                    // फॉर्म और स्थिति रीसेट करें
+                    // Reset form and status
                     uploadForm.reset();
                     selectedFile = null;
                     fileInfo.textContent = '';
                     vhIdStatus.textContent = '';
                     vhIdStatus.className = 'vh-id-status';
                     isVhIdAvailable = false;
-                    checkVhIdButton.disabled = true; // चेक बटन को फिर से डिसेबल करें
+                    checkVhIdButton.disabled = true;
                 } else {
-                    let errorMessage = data.description || 'फाइल भेजने में त्रुटि हुई।';
+                    let errorMessage = data.description || 'Failed to send file.';
                     if (response.status === 400 && errorMessage.includes('file too big')) {
-                        errorMessage = 'फाइल का आकार Telegram की सीमा से अधिक है (अधिकतम 2GB)।';
+                        errorMessage = 'File size exceeds Telegram\'s limit (max 2GB).';
                     }
-                    generalStatusMessage.textContent = `त्रुटि: ${errorMessage}`;
+                    generalStatusMessage.textContent = `Error: ${errorMessage}`;
                     generalStatusMessage.className = 'status-message error';
                     console.error('Telegram API Error:', data);
                 }
             } catch (error) {
-                generalStatusMessage.textContent = 'नेटवर्क त्रुटि या फाइल भेजने में असमर्थ।';
+                generalStatusMessage.textContent = 'Network error or unable to send file.';
                 generalStatusMessage.className = 'status-message error';
                 console.error('Fetch error:', error);
             } finally {
@@ -501,7 +496,7 @@
             }
         });
 
-        // पेज लोड होने पर प्रारंभिक वैलिडेशन
+        // Initial validation on page load
         validateForm();
     </script>
 </body>
