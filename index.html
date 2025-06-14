@@ -88,10 +88,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
+            width: 50px; /* Default width */
             height: 50px;
             flex-shrink: 0;
-            cursor: pointer; /* पूरे रैपर को क्लिक करने योग्य बनाएं */
+            cursor: pointer;
         }
         .file-upload-button {
             background-color: #0000FF;
@@ -151,11 +151,30 @@
             font-weight: bold;
             min-height: 20px;
             font-size: 0.95em;
+            display: flex; /* For spinner alignment */
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Space between text and spinner */
         }
         .success { color: green; }
         .error { color: red; }
         .info { color: #0000FF; }
         .warning { color: orange; }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #0000FF; /* Blue */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
         .vh-id-status {
             font-size: 0.85em;
@@ -231,15 +250,16 @@
             .input-group {
                 width: 100%;
             }
-            /* File upload button adjustments for mobile */
+            /* Mobile: Upload button width same as Trust Title input */
             .file-upload-wrapper {
-                width: 100%; /* Take full width on small screens */
+                width: 100%; /* Take full width to match other inputs */
                 height: 50px;
                 justify-content: flex-start; /* Align to the left */
             }
             .file-upload-button {
-                width: 100px; /* Make the button itself a bit wider */
+                width: 100%; /* Make the button itself take full width of its wrapper */
             }
+
             .vh-id-check-button {
                 width: 100%;
             }
@@ -443,7 +463,8 @@
                 return;
             }
 
-            generalStatusMessage.textContent = 'Sending file... Please wait.';
+            // Display sending message with spinner
+            generalStatusMessage.innerHTML = 'Sending file... Please wait <div class="spinner"></div>';
             generalStatusMessage.className = 'status-message info';
             sendButton.disabled = true;
 
@@ -467,9 +488,9 @@
                 const data = await response.json();
 
                 if (response.ok && data.ok) {
-                    generalStatusMessage.textContent = 'File successfully sent to Telegram channel!';
+                    generalStatusMessage.textContent = 'File successfully sent!';
                     generalStatusMessage.className = 'status-message success';
-                    // Reset form and status
+                    // Reset form and status after successful send
                     uploadForm.reset();
                     selectedFile = null;
                     fileInfo.textContent = '';
@@ -492,7 +513,7 @@
                 console.error('Fetch error:', error);
             } finally {
                 sendButton.disabled = false;
-                validateForm();
+                validateForm(); // Re-validate to set correct button state and message
             }
         });
 
